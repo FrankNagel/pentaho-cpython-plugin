@@ -17,18 +17,8 @@ def main():
 def check_libraries():
     check_min_python()
     isPython3 = sys.version_info >= (3, 0)
-    if isPython3:
-        check_library('io')
-    else:
-        check_library('StringIO')
-    check_library('math')
-    check_library('socket')
-    check_library('os')
-    check_library('pickle')
-    check_library('sklearn')
     check_library('matplotlib')
 
-    check_library('numpy')
     if check_library('pandas', ['DataFrame'], pandas_version_min):
         check_min_pandas()
 

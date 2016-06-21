@@ -53,7 +53,7 @@ import java.util.List;
  * a variable is an image and retrieves it as png. In this mode there is one row output from the step, where each outgoing
  * field holds the string/serializable value of a single variable.
  * </p>
- * The step requires python 2.7 or 3.4. It also requires the pandas, numpy, matplotlib and sklearn. The python executable
+ * The step requires python 2.7 or 3.4. It also requires the pandas, numpy and matplotlib. The python executable
  * must be available in the user's path.
  *
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)

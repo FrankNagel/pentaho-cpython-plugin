@@ -276,7 +276,7 @@ public class PythonSession {
 
   /**
    * Launches the python server. Performs some basic requirements checks for the
-   * python environment - e.g. python needs to have numpy, pandas and sklearn
+   * python environment - e.g. python needs to have numpy, pandas and matplotlib
    * installed.
    *
    * @param startPython true if the server is to actually be started. False is
