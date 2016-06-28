@@ -214,16 +214,16 @@ def frame_to_fields_list(frame, include_index):
         field_list.append(attribute)
     return field_list
 
+
 def send_response(response, isJson):
     if isJson is True:
         response = json.dumps(response)
 
-    if _global_python3 is True:
-        _global_connection.sendall(struct.pack('>L', len(response)))
-        _global_connection.sendall(response.encode('utf-8'))
-    else:
-        _global_connection.sendall(struct.pack('>L', len(response)))
-        _global_connection.sendall(response)
+    if not isinstance(response, bytes):
+        response = response.encode('utf-8')
+
+    _global_connection.sendall(struct.pack('>L', len(response)))
+    _global_connection.sendall(response)
 
 
 def receive_message(isJson):
