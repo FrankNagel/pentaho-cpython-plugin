@@ -22,7 +22,7 @@
 
 package org.pentaho.python;
 
-import com.opencsv.CSVParser;
+import com.opencsv.CSVReader;
 import org.apache.commons.codec.binary.Base64;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.pentaho.di.core.Const;
@@ -111,11 +111,6 @@ public class ServerUtils {
   protected static final String EXECUTE_SCRIPT_COMMAND = "execute_script";
 
   protected static final String MISSING_VALUE = "?";
-
-  /**
-   * For parsing CSV rows from python
-   */
-  protected static final CSVParser PARSER = new CSVParser( ',', '\'', '\\' );
 
   /**
    * For parsing dates out of CSV returned from python
@@ -563,11 +558,10 @@ public class ServerUtils {
     rowMetaAndRows.m_rowMeta = kettleMeta;
     rowMetaAndRows.m_rows = new Object[numRows][];
     BufferedReader reader = new BufferedReader( new StringReader( csv ) );
-    String line;
+    CSVReader parser = new CSVReader( reader,  ',', '\'', '\\' );
+    String[] parsed;
     int count = 0;
-    while ( ( line = reader.readLine() ) != null ) {
-      String[] parsed = PARSER.parseLine( line );
-
+    while ( ( parsed = parser.readNext() ) != null ) {
       Object[] row = new Object[kettleMeta.size()];
       for ( int i = 0; i < kettleMeta.size(); i++ ) {
         if ( parsed[i].equals( MISSING_VALUE ) ) {
