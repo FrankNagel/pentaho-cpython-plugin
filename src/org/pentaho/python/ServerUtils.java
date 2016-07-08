@@ -648,15 +648,17 @@ public class ServerUtils {
   protected static StringBuilder rowsToCSV( RowMetaInterface meta, List<Object[]> rows ) {
     StringBuilder builder = new StringBuilder();
     // header row
-    int i = 0;
+    int meta_count = 0;
     for ( ValueMetaInterface v : meta.getValueMetaList() ) {
       String name = quote( v.getName() );
-      builder.append( i > 0 ? "," : "" ).append( name );
-      i++;
+      builder.append( meta_count > 0 ? "," : "" ).append( name );
+      meta_count++;
     }
     builder.append( "\n" );
     for ( Object[] row : rows ) {
-      for ( i = 0; i < row.length; i++ ) {
+      for (int i = 0; i < row.length; i++ ) {
+	if (i >= meta_count)
+	  break;
         String value;
         if ( row[i] == null || Const.isEmpty( row[i].toString() ) ) {
           value = "";
