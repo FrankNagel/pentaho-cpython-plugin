@@ -659,7 +659,7 @@ public class ServerUtils {
       for ( i = 0; i < row.length; i++ ) {
         String value;
         if ( row[i] == null || Const.isEmpty( row[i].toString() ) ) {
-          value = "?";
+          value = "";
         } else {
           switch ( meta.getValueMetaList().get( i ).getType() ) {
             case ValueMetaInterface.TYPE_NUMBER:
@@ -680,8 +680,8 @@ public class ServerUtils {
             default:
               value = quote( row[i].toString() );
           }
-          builder.append( i > 0 ? "," : "" ).append( value );
         }
+	builder.append( i > 0 ? "," : "" ).append( value );
       }
       builder.append( "\n" );
     }
