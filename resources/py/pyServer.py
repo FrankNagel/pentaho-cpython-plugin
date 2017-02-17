@@ -227,27 +227,18 @@ def send_response(response, isJson):
 
 
 def receive_message(isJson):
-    size = 0
-    length = None
-    if _global_python3 is True:
-        length = bytearray()
-    else:
-        length = ''
+    length = bytearray()
     while len(length) < 4:
-        if _global_python3 is True:
-            length += _global_connection.recv(4);
-        else:
-            length += _global_connection.recv(4);
-
+        length += _global_connection.recv(4 - len(length));
     size = struct.unpack('>L', length)[0]
 
-    data = ''
+    data = bytes()
     while len(data) < size:
-        if _global_python3 is True:
-            data += _global_connection.recv(size).decode('utf-8');
-        else:
-            data += _global_connection.recv(size);
-    if isJson is True:
+        data += _global_connection.recv(size - len(data));
+    if not isinstance(data, str):
+        data = data.decode('utf-8')
+
+    if isJson:
         return json.loads(data)
     return data
 
