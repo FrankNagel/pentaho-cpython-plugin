@@ -249,10 +249,21 @@ public class PythonSession {
    * @throws SessionException if python is not available
    */
   private synchronized PythonSession getSession( Object requester ) throws SessionException {
-    if ( s_sessionSingleton == null ) {
-      throw new SessionException( "Python not available!" );
+    boolean running = false;
+    try {
+      m_serverProcess.exitValue();
+    } catch (IllegalThreadStateException e) {
+	running = true;
     }
-
+    if ( ! running ) {
+      try {
+	m_localSocket.close();
+        launchServer( true );
+      } catch ( IOException e) {
+	  throw new SessionException( "Python not available!" );
+      }
+    }
+      
     if ( s_sessionHolder == requester ) {
       return this;
     }
